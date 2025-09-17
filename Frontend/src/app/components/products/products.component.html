@@ -1,0 +1,172 @@
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <div class="w-64 bg-gray-800 text-white flex-shrink-0">
+    <ul class="p-4 space-y-4">
+
+      <li class="bg-gray-800 p-4 rounded-md">
+        <label class="block mb-3 text-sm font-semibold text-white">Price Range</label>
+
+        <!-- Combined Range -->
+        <div class="w-full">
+          <!-- Single price slider -->
+          <input type="range" min="1000" max="500000" step="1000" [(ngModel)]="maxPrice" (input)="applyMaxChange()"
+            class="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer
+           [&::-webkit-slider-thumb]:appearance-none
+           [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5
+           [&::-webkit-slider-thumb]:rounded-full
+           [&::-webkit-slider-thumb]:bg-indigo-500
+           [&::-webkit-slider-thumb]:shadow-md
+           [&::-webkit-slider-thumb]:hover:bg-indigo-600
+           [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5
+           [&::-moz-range-thumb]:rounded-full
+           [&::-moz-range-thumb]:bg-indigo-500
+           [&::-moz-range-thumb]:shadow-md
+           [&::-moz-range-thumb]:hover:bg-indigo-600" />
+
+          <!-- Labels -->
+          <div class="flex justify-between mt-3 text-sm font-medium text-gray-200">
+            <span>Min: ₹{{ minPrice | number }}</span>
+            <span>Max: ₹{{ maxPrice | number }}</span>
+          </div>
+
+          <!-- Reset button -->
+          <button class="mt-3 w-full px-3 py-2 bg-red-500 hover:bg-red-600 rounded-md text-xs text-white"
+            (click)="resetPriceFilter()">
+            Reset
+          </button>
+        </div>
+
+        <!-- Category List -->
+        <div class="mt-6">
+          <label class="block mb-2 text-sm font-semibold">Category</label>
+          <ul class="space-y-2">
+            <li *ngFor="let category of categories" (click)="applyCategoryFilter(category)"
+              class="px-3 py-2 rounded-md cursor-pointer hover:bg-gray-600 transition"
+              [class.bg-indigo-600]="selectedCategory === category">
+              {{ category }}
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6 bg-gray-50">
+    <!-- Search Bar Section -->
+    <div class="mb-6 bg-white p-3 rounded-lg shadow-sm w-1/2">
+      <div class="flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input
+          class="flex-1 px-4 py-3 text-lg border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+          placeholder="Search products..." type="text" (input)="applyNameFilter($event)" />
+      </div>
+    </div>
+
+    <!-- Action Buttons and Results Info -->
+    <div class="flex justify-between items-center mb-6">
+      <div class="flex gap-2">
+        <button class="p-2 rounded-md bg-gray-200 hover:bg-gray-300" title="Grid View">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+          </svg>
+        </button>
+        <button class="p-2 rounded-md bg-gray-200 hover:bg-gray-300" title="Large View">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <polyline points="15 3 21 3 21 9" />
+            <polyline points="9 21 3 21 3 15" />
+            <line x1="21" y1="3" x2="14" y2="10" />
+            <line x1="3" y1="21" x2="10" y2="14" />
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Results Info -->
+      <div class="text-sm text-gray-600">
+        Showing {{ getStartIndex() + 1 }}-{{ getEndIndex() }} of {{ filteredProducts.length }} products
+      </div>
+    </div>
+
+    <!-- Products List -->
+    <div *ngIf="filteredProducts.length > 0; else noData" class="grid md:grid-cols-4 gap-6 mb-8">
+      <div *ngFor="let product of paginatedProducts" class="bg-white shadow-md rounded-lg p-4 relative">
+        <!-- Add to Cart -->
+        <button class="absolute top-2 right-2 bg-transparent" (click)="addToCart(product)">
+          🛒
+        </button>
+
+        <!-- Product Image -->
+        <div class="cursor-pointer" (click)="navigateToProductDetails(product._id)">
+          <img [src]="product.image" alt="{{ product.title }}" class="w-full h-40 object-cover rounded-md" />
+        </div>
+
+        <!-- Product Info -->
+        <div class="mt-4">
+          <p class="text-sm text-gray-500">{{ product.category }}</p>
+          <h3 class="font-semibold text-lg">{{ product.title }}</h3>
+          <p class="text-indigo-600 font-bold">₹{{ product.price }}</p>
+          <p *ngIf="isLargeView" class="text-gray-600 mt-2">{{ product.details }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="filteredProducts.length > 0" class="flex justify-center items-center mt-8">
+      <nav class="flex items-center space-x-2">
+        <!-- Previous Button -->
+        <button 
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          [class.opacity-50]="currentPage === 1"
+          [class.cursor-not-allowed]="currentPage === 1"
+          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700 disabled:hover:bg-white disabled:hover:text-gray-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Page Numbers -->
+        <ng-container *ngFor="let page of getVisiblePages()">
+          <button 
+            *ngIf="isNumber(page); else dots"
+            (click)="goToPage(page)"
+            [class.bg-indigo-600]="currentPage === page"
+            [class.text-white]="currentPage === page"
+            [class.border-indigo-600]="currentPage === page"
+            class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-900">
+            {{ page }}
+          </button>
+          <ng-template #dots>
+            <span class="px-3 py-2 text-sm font-medium text-gray-700">{{ page }}</span>
+          </ng-template>
+        </ng-container>
+
+        <!-- Next Button -->
+        <button 
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          [class.opacity-50]="currentPage === totalPages"
+          [class.cursor-not-allowed]="currentPage === totalPages"
+          class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700 disabled:hover:bg-white disabled:hover:text-gray-500">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- No Data Template -->
+    <ng-template #noData>
+      <div class="text-center py-10">
+        <h1 class="text-xl font-semibold text-gray-600">There are no products available.</h1>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,202 @@
+<div class="container mx-auto px-4 py-5">
+    @if(product){
+    <div class="flex flex-col lg:flex-row">
+        <!-- Product Image -->
+        <div class="w-full lg:w-2/4 p-0">
+            <img src="{{ product.image }}" alt="chair" class="w-full h-96 object-contain bg-gray-100" />
+        </div>
+        <!-- Product Details -->
+        <div class="w-full lg:w-1/2 py-3 lg:py-0 lg:pl-4">
+            <div class="px-4">
+                <!-- Navigation -->
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="m-0 text-gray-600">
+                            <a class="text-gray-700 hover:text-gray-900" routerLink="/home">Home</a> /
+                            <a class="text-gray-700">{{ product.category }}</a> / {{ product.title }}
+                        </p>
+                    </div>
+                    <div class="flex">
+                        <button (click)="navigateToPreviousProduct()"
+                            class="text-gray-600 hover:text-gray-900 disabled:text-gray-400 disabled:cursor-not-allowed"
+                            [disabled]="isFirstProduct">&lt;</button>
+                        <button (click)="navigateToNextProduct()"
+                            class="text-gray-600 hover:text-gray-900 ml-2 disabled:text-gray-400 disabled:cursor-not-allowed"
+                            [disabled]="isLastProduct">&gt;</button>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <h4 class="text-gray-600 mt-3 text-xl">{{ product.title }}</h4>
+
+                <!-- Price -->
+                <div class="flex items-end mt-2">
+                    <h3 class="m-0 text-2xl font-bold text-gray-800">₹{{ product.price }}</h3>
+                    <p class="m-0 ml-2 text-gray-500 text-sm">+ Free Shipping</p>
+                </div>
+
+                <!-- Description -->
+                <div class="mt-4">
+                    <p class="text-gray-700">{{product.details}}</p>
+                </div>
+
+                <!-- Quantity and Add to Cart -->
+                <div class="mt-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center border border-gray-300 rounded">
+                            <button (click)="decrementQuantity()"
+                                class="px-3 py-1 text-gray-700 hover:bg-gray-100">-</button>
+                            <input type="number" [(ngModel)]="quantity" (ngModelChange)="onQuantityChange()"
+                                class="w-12 text-center border-x border-gray-300 py-1">
+                            <button (click)="incrementQuantity()"
+                                class="px-3 py-1 text-gray-700 hover:bg-gray-100">+</button>
+                        </div>
+                        <button class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded ml-4"
+                            (click)="addProductToCart()">
+                            Add To Cart
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-6 border-gray-300">
+
+                <!-- Categories -->
+                <div class="flex flex-wrap items-center">
+                    <p class="mr-2 text-gray-700 font-medium">Categories:</p>
+                    <p class="text-gray-600 mx-1">Chair, Sofa, Bed, Wardrobe, Dressing Tables, Dining Tables, Study
+                        Tables, TV and Media Units.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="mt-8 flex flex-col md:flex-row">
+        <!-- Tab Buttons -->
+        <div class="w-full md:w-1/5 mb-4 md:mb-0">
+            <div class="flex flex-col">
+                <button (click)="showDescription()"
+                    class="py-3 px-4 text-left border-b md:border-b-0 md:border-r border-gray-300"
+                    [class.bg-gray-100]="selectedTab === 'description'"
+                    [class.text-gray-900]="selectedTab === 'description'"
+                    [class.text-gray-600]="selectedTab !== 'description'">
+                    Description
+                </button>
+                <button (click)="showReviews()" class="py-3 px-4 text-left"
+                    [class.bg-gray-100]="selectedTab === 'reviews'" [class.text-gray-900]="selectedTab === 'reviews'"
+                    [class.text-gray-600]="selectedTab !== 'reviews'">
+                    Reviews({{ product.reviews.length }})
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="w-full md:w-4/5 md:pl-6">
+            <div [ngSwitch]="selectedTab">
+                <div *ngSwitchCase="'description'" class="text-gray-700">
+                    {{ product.details }}
+                </div>
+
+                <div *ngSwitchCase="'reviews'">
+                    <!-- Existing Reviews -->
+                    <div *ngIf="product.reviews.length == 0">
+                        <p class="text-gray-600">There are no reviews yet.</p>
+                    </div>
+
+                    <div *ngFor="let review of product.reviews" class="flex mt-4 p-4 bg-gray-50 rounded">
+                        <img src="/assets/images/single_product/img_avatar.png" alt="Avatar"
+                            class="w-12 h-12 rounded-full">
+                        <div class="ml-4">
+                            <p class="m-0 font-medium text-gray-800">{{ review.name }}</p>
+                            <div class="flex items-center my-1">
+                                <div class="flex text-yellow-400">
+                                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                                        <mat-icon *ngIf="star <= review.rating" class="text-sm">star</mat-icon>
+                                        <mat-icon *ngIf="star > review.rating" class="text-sm">star_border</mat-icon>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <p class="text-gray-700 mt-2">{{ review.comment }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Review Form -->
+                    <div class="mt-8 p-6 bg-gray-50 rounded">
+                        <h4 class="font-bold text-gray-800">Be the first to review "Desktop Table with Drawers"</h4>
+                        <h6 class="text-gray-600 mt-2">Your email address will not be published. Required fields are
+                            marked *</h6>
+
+                        <form [formGroup]="reviewForm" class="mt-6">
+                            <!-- Rating -->
+                            <div class="flex flex-col md:flex-row mb-4">
+                                <div class="w-full md:w-1/4 mb-2 md:mb-0">
+                                    <p class="font-medium text-gray-700">Your rating *</p>
+                                </div>
+                                <div class="w-full md:w-3/4 flex items-center">
+                                    <a *ngFor="let star of [1,2,3,4,5]" (click)="toggleStar(star)"
+                                        class="cursor-pointer">
+                                        <mat-icon [class.text-yellow-400]="isStarFilled(star)"
+                                            [class.text-gray-300]="!isStarFilled(star)">
+                                            star
+                                        </mat-icon>
+                                    </a>
+                                </div>
+                            </div>
+                            <div *ngIf="submitted && f['rating'].errors" class="text-red-500 mt-1">
+                                Rating is required
+                            </div>
+
+                            <!-- Comment -->
+                            <div class="mb-4">
+                                <p class="font-medium text-gray-700 mb-2">Your review *</p>
+                                <textarea class="w-full p-3 border border-gray-300 rounded" rows="5"
+                                    formControlName="comment"></textarea>
+                                <div *ngIf="submitted && f['comment'].errors" class="text-red-500 mt-1">
+                                    Comment is required
+                                </div>
+                            </div>
+
+                            <!-- Name and Email -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="font-medium text-gray-700 mb-1">Name *</p>
+                                    <input class="w-full p-2 border border-gray-300 rounded" formControlName="name">
+                                    <div *ngIf="submitted && f['name'].errors" class="text-red-500 mt-1">
+                                        Name is required
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-gray-700 mb-1">Email *</p>
+                                    <input class="w-full p-2 border border-gray-300 rounded" formControlName="email">
+                                    <div *ngIf="submitted && f['email'].errors" class="text-red-500 mt-1">
+                                        <div *ngIf="f['email'].errors['required']">Email is required</div>
+                                        <div *ngIf="f['email'].errors['email']">Invalid email address</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded mt-4"
+                                (click)="addReview()">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Related Products</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div *ngFor="let product of relatedProducts">
+                <app-one-product [product]="product"></app-one-product>
+            </div>
+        </div>
+    </div>
+    }
+</div>

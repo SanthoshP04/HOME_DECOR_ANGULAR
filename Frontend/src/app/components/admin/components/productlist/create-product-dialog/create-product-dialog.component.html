@@ -1,0 +1,94 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto">
+    <!-- Main Card -->
+    <div class="bg-white shadow-xl rounded-lg h-[95vh] overflow-y-auto">
+      <div class="px-6 py-8 sm:px-8">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900">Create New Product</h2>
+          <p class="mt-2 text-gray-600">Add a new product to your inventory</p>
+        </div>
+        <form [formGroup]="createForm" class="space-y-6">
+          <div>
+            <label for="productName" class="block text-sm font-medium text-gray-700 mb-2">
+              Product Name
+            </label>
+            <input formControlName="title" type="text" id="productName" placeholder="Enter product name"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400" />
+          </div>
+
+          <div>
+            <label for="productDescription" class="block text-sm font-medium text-gray-700 mb-2">
+              Product Description
+            </label>
+            <textarea formControlName="details" id="productDescription" rows="4" placeholder="Enter product description"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400 resize-none"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="productPrice" class="block text-sm font-medium text-gray-700 mb-2">
+                Product Price
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                <input formControlName="price" type="number" id="productPrice" placeholder="0.00"
+                  class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400" />
+              </div>
+            </div>
+
+            <div>
+              <label for="productQuantity" class="block text-sm font-medium text-gray-700 mb-2">
+                Product Quantity
+              </label>
+              <input formControlName="productQuantity" type="number" id="productQuantity" placeholder="Enter quantity"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 placeholder-gray-400" />
+            </div>
+          </div>
+
+          <div>
+            <label for="productCategory" class="block text-sm font-medium text-gray-700 mb-2">
+              Product Category
+            </label>
+            <select formControlName="productCategory" id="productCategory"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 bg-white">
+              <option value="" selected disabled class="text-gray-400">Select Category</option>
+              <option value="Table">Table</option>
+              <option value="Chair">Chair</option>
+              <option value="Sofa">Sofa</option>
+              <option value="Bed">Bed</option>
+              <option value="Wardrobe">Wardrobe</option>
+              <option value="Dressing Tables">Dressing Tables</option>
+              <option value="Dining Tables">Dining Tables</option>
+              <option value="Study Tables">Study Tables</option>
+              <option value="TV and Media Units">TV & Media Units</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="productImage" class="block text-sm font-medium text-gray-700 mb-2">
+              Product Image
+            </label>
+            <div class="relative">
+              <input type="file" id="productImage" (change)="onFileSelected($event)" accept="image/*"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 file:cursor-pointer" />
+            </div>
+            <p class="mt-2 text-sm text-gray-500">Upload product image (PNG, JPG, GIF up to 10MB)</p>
+          </div>
+
+          <div class="pt-6">
+            <button type="submit" (click)="sumbitForm()"
+              class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg font-medium text-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl">
+              <span class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Add Product
+              </span>
+            </button>
+          </div>
+        </form>
+
+
+
+      </div>
+    </div>

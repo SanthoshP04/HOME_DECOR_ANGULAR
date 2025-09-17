@@ -1,0 +1,35 @@
+<div class="relative w-full overflow-hidden rounded-xl p-8 shadow-2xl transition-all duration-300 transform hover:scale-[1.01]
+            bg-cover bg-center bg-no-repeat bg-[url('/assets/minimal-zoom-virtual-backgrounds-office-wall-plain-white-room-with-plants-background.jpg')]">
+  <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-transparent opacity-80 rounded-xl"></div>
+  
+  <div class="relative flex flex-col items-center justify-center text-center z-10">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-2 drop-shadow-lg">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">Mega Sale!</span>
+    </h1>
+    <h3 class="text-lg sm:text-xl md:text-2xl font-light text-gray-200 mb-6 drop-shadow-md">
+      Enjoy 10% Off All Products
+    </h3>
+    <a href="products"
+      class="inline-block bg-white text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg 
+             transform transition-all duration-300 hover:scale-105 hover:shadow-xl
+             animate-pulse-slow
+             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
+      Shop Now
+    </a>
+  </div>
+</div>
+
+<style>
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+</style>

@@ -1,0 +1,66 @@
+<footer class="bg-gray-900 text-gray-400 py-8">
+  <div class="mx-auto w-full max-w-screen-xl px-4">
+    <div class="md:flex md:justify-between mb-6">
+      <div class="mb-6 md:mb-0">
+        <a href="#" class="flex items-center">
+          <p class="self-center text-3xl font-bold whitespace-nowrap text-blue-400">Furniture Store</p>
+        </a>
+      </div>
+      <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+        <div>
+          <h2 class="mb-4 text-sm font-semibold text-gray-200 uppercase tracking-wide">Product Links</h2>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a class="hover:text-blue-400 transition-colors duration-200" [routerLink]="['/products']">All
+                Products</a></li>
+            <li><a class="hover:text-blue-400 transition-colors duration-200" [routerLink]="['/products']"
+                [queryParams]="{ category: 'Chair' }">Chair</a></li>
+            <li><a class="hover:text-blue-400 transition-colors duration-200" [routerLink]="['/products']"
+                [queryParams]="{ category: 'Table' }">Table</a></li>
+            <li><a class="hover:text-blue-400 transition-colors duration-200" [routerLink]="['/products']"
+                [queryParams]="{ category: 'Sofa' }">Sofa</a></li>
+                 <li><a class="hover:text-blue-400 transition-colors duration-200" [routerLink]="['/products']"
+                [queryParams]="{ category: 'Dining table' }"> Dining Tables</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-4 text-sm font-semibold text-gray-200 uppercase tracking-wide">Shopping & Account</h2>
+          <ul class="space-y-2 text-sm font-medium">
+            <li><a [routerLink]="['/cart']" class="hover:text-blue-400 transition-colors duration-200">Cart</a></li>
+            <li><a [routerLink]="['/profile']" class="hover:text-blue-400 transition-colors duration-200">My Account</a>
+            </li>
+            <li><a [routerLink]="['/login']" class="hover:text-blue-400 transition-colors duration-200">Login</a></li>
+            <li><a [routerLink]="['/register']" class="hover:text-blue-400 transition-colors duration-200">Sign Up</a>
+            </li>
+            <li><a [routerLink]="['/about']" class="hover:text-blue-400 transition-colors duration-200">About Us</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-4 text-sm font-semibold text-gray-200 uppercase tracking-wide">Connect With Us</h2>
+          <ul class="space-y-2 text-sm font-medium">
+            <h3 class="hover:text-blue-400 transition-colors duration-200">Contact Us</h3>
+            <h3 class="hover:text-blue-400 transition-colors duration-200">Privacy Policy</h3>
+            <h3 class="hover:text-blue-400 transition-colors duration-200">Terms of Service</h3>
+            <h3 class="hover:text-blue-400 transition-colors duration-200">Support</h3>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-6 border-gray-700 sm:mx-auto lg:my-8" />
+
+    <div class="sm:flex sm:items-center sm:justify-between text-sm">
+      <span class="text-center sm:text-left mb-4 sm:mb-0">© 2024 Furniture Store. All Rights Reserved.</span>
+      <div class="flex justify-center sm:justify-end space-x-5">
+        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-200"><i
+            class="fab fa-facebook-f fa-lg"></i></a>
+        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-200"><i
+            class="fab fa-twitter fa-lg"></i></a>
+        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-200"><i
+            class="fab fa-instagram fa-lg"></i></a>
+        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-200"><i
+            class="fab fa-linkedin-in fa-lg"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>

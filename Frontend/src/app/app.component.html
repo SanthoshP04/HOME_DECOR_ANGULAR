@@ -1,0 +1,29 @@
+<!-- Loader Overlay (Always on top when loading = true) -->
+<div *ngIf="loading" class="fixed inset-0 flex items-center justify-center bg-black z-50">
+  <iframe src="https://lottie.host/embed/9b25668e-bb20-4bfb-95ee-19df247b5106/r8cyhXAoFp.lottie"
+    class="w-full h-full border-0"></iframe>
+</div>
+
+<!-- App Layout -->
+<div class="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+  <!-- Header -->
+  <header class="bg-gray-800 text-white shadow-md">
+    <div class="container mx-auto px-6 py-4">
+      <app-header></app-header>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-grow px-6 py-8">
+    <div class="main-panel bg-white p-10 rounded-xl shadow-lg w-full h-full">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-700 text-gray-300">
+    <div class="app-footer container mx-auto px-6 py-6">
+      <app-footer></app-footer>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,64 @@
+<div class="bg-white rounded-xl shadow-lg mt-6">
+  <div class="p-6">
+    <h3 class="text-2xl font-semibold text-gray-800">Orders Dashboard</h3>
+    <div class="overflow-x-auto mt-4">
+      <table class="w-full whitespace-nowrap">
+        <thead class="bg-gray-100">
+          <tr class="text-left font-medium text-gray-700 text-lg">
+            <th class="py-3 px-4">User</th>
+            <th class="py-3 px-4">Actions</th>
+            <th class="py-3 px-4">Status</th>
+            <th class="py-3 px-4">Since</th>
+            <th class="py-3 px-4">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders"
+            class="border-b border-gray-200 transition-colors duration-200 hover:bg-gray-50">
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                <img [src]="image" alt="user" width="45" class="rounded-full" />
+                <div class="ml-3 flex flex-col">
+                  <h5 class="mb-0 font-medium text-base">{{ order.username }}</h5>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <button
+                class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg mr-2 disabled:opacity-50 transition-colors duration-200"
+                [disabled]="order.status === 'Accepted'" (click)="accepted(order._id)">
+                Accept
+              </button>
+              <button
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50 transition-colors duration-200"
+                [disabled]="order.status === 'Rejected'" (click)="rejected(order._id)">
+                Reject
+              </button>
+              <button
+                class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg ml-2 disabled:opacity-50 transition-colors duration-200"
+                [disabled]="order.status === 'Pending'" (click)="pending(order._id)">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                <div class="p-1 rounded-full mr-2" [ngClass]="{
+                    'bg-green-500': order.status === 'Accepted',
+                    'bg-yellow-500': order.status === 'Pending',
+                    'bg-red-500': order.status === 'Rejected'
+                  }"></div>
+                <div>{{ order.status }}</div>
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <h5 class="mb-0 font-medium text-base">{{ order.daysDifference }} Days</h5>
+            </td>
+            <td class="py-4 px-4">
+              <h5 class="mb-0 font-medium text-base">{{ order.totalPrice.toFixed(1) }} ₹</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

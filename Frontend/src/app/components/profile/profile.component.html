@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 font-sans antialiased text-gray-800 p-4 sm:p-6 lg:p-8">
+
+  <div class="container mx-auto max-w-screen-xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+    <header class="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center bg-slate-50/50">
+      <div class="flex items-center mb-4 sm:mb-0">
+        <svg class="w-10 h-10 text-sky-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        <h1 class="text-3xl font-bold text-slate-800">
+          My Account
+        </h1>
+      </div>
+       <button type="button"
+        class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-transform transform hover:scale-105 ease-in-out"
+        (click)="logout()">
+        Logout
+      </button>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3">
+
+      <div class="lg:col-span-1 p-6 border-b lg:border-b-0 lg:border-r border-slate-200">
+        <div class="space-y-8">
+          <div>
+            <app-user-picture></app-user-picture>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-slate-700 pb-3 mb-4 border-b border-slate-200">Pending Orders</h3>
+            <app-pending-orders></app-pending-orders>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 p-6">
+        <div class="space-y-8">
+          <div>
+            <app-user-info></app-user-info>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-lg font-semibold text-slate-700 pb-3 mb-4 border-b border-slate-200">Accepted Orders</h3>
+              <app-accepted-orders></app-accepted-orders>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-700 pb-3 mb-4 border-b border-slate-200">Rejected Orders</h3>
+              <app-rejected-orders></app-rejected-orders>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
+
+
+
+<!-- <!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+
+  <div class="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4 sm:mb-0">
+        My Account
+      </h1>
+      <button type="button"
+        class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-transform transform hover:scale-105 ease-in-out"
+        (click)="logout()">
+        Logout
+      </button>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <div class="lg:col-span-1 flex flex-col gap-8">
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+          <app-user-picture></app-user-picture>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+          <app-pending-orders></app-pending-orders>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 flex flex-col gap-8">
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+          <app-user-info></app-user-info>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+          <app-accepted-orders></app-accepted-orders>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg">
+          <app-rejected-orders></app-rejected-orders>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+
+</html> -->

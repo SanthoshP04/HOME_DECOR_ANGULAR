@@ -1,0 +1,32 @@
+<div class="bg-white rounded-xl shadow-lg p-6 max-w-4xl mx-auto">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+    <div>
+      <h4 class="text-2xl font-semibold text-gray-800">Orders Summary</h4>
+      <h5 class="text-lg font-normal text-gray-500 mt-1">
+        Weekly Sales Report
+      </h5>
+    </div>
+  </div>
+  <div class="mt-6">
+    <div class="w-full">
+      <div class="flex flex-col w-full">
+        <div id="sales-chart-container">
+          <apx-chart
+            [series]="salesChartOptions.series"
+            [chart]="salesChartOptions.chart"
+            [xaxis]="salesChartOptions.xaxis"
+            [yaxis]="salesChartOptions.yaxis"
+            [grid]="salesChartOptions.grid"
+            [stroke]="salesChartOptions.stroke"
+            [tooltip]="salesChartOptions.tooltip"
+            [dataLabels]="salesChartOptions.dataLabels"
+            [legend]="salesChartOptions.legend"
+            [colors]="salesChartOptions.colors"
+            [markers]="salesChartOptions.markers"
+          >
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

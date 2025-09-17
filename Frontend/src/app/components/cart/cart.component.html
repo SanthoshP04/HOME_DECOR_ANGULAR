@@ -1,0 +1,116 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex flex-col lg:flex-row gap-8">
+
+    <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-xl overflow-hidden">
+      <div class="p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Shopping Cart</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-center min-w-[600px]">
+            <thead>
+              <tr class="text-gray-500 uppercase text-sm font-semibold border-b border-gray-200">
+                <th scope="col" class="py-3 px-4 text-left"></th>
+                <th scope="col" class="py-3 px-4 text-left">Product</th>
+                <th scope="col" class="py-3 px-4">Price</th>
+                <th scope="col" class="py-3 px-4">Quantity</th>
+                <th scope="col" class="py-3 px-4">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of cart; let i = index" class="border-b border-gray-100 last:border-b-0">
+                <td class="py-4 px-4 align-middle">
+                  <button (click)="deleteProduct(product._id)"
+                    class="text-red-500 hover:text-red-700 transition-colors duration-200">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+                <td class="py-4 px-4 align-middle flex items-center gap-4">
+                  <img [src]="product.image" alt="Product Image" class="h-20 w-20 object-cover rounded-md shadow-sm" />
+                  <span class="text-gray-800 font-medium">{{ product.title }}</span>
+                </td>
+                <td class="py-4 px-4 align-middle text-gray-700 font-semibold">₹{{ product.price | number: '1.2-2' }}
+                </td>
+                <td class="py-4 px-4 align-middle">
+                  <div class="flex items-center justify-center gap-2">
+                    <button (click)="decreaseProductQuantity(product._id)"
+                      class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+                      -
+                    </button>
+                    <span class="w-8 text-center text-gray-800 font-medium">{{ product.quantity }}</span>
+                    <button (click)="increaseProductQuantity(product._id)"
+                      class="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100 transition-colors duration-200">
+                      +
+                    </button>
+                  </div>
+                </td>
+                <td class="py-4 px-4 align-middle text-gray-800 font-bold">₹{{ (product.price *
+                  product.quantity).toFixed(2) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/3">
+      <div class="bg-white p-6 rounded-xl shadow-lg sticky top-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Cart Totals</h2>
+        <div class="space-y-4 text-gray-700">
+          <div class="flex justify-between border-b pb-2">
+            <span>Subtotal:</span>
+            <span class="font-semibold">₹{{ this.total | number: '1.2-2' }}</span>
+          </div>
+          <div class="flex flex-col border-b pb-2">
+            <div class="flex justify-between">
+              <span>Shipping:</span>
+              <span class="font-semibold">Flat rate: ₹{{ cart.length === 0 ? '0.00' : '300.00' }}</span>
+            </div>
+            <div class="text-sm text-gray-500">
+              <p class="mt-2">Shipping to: <span class="font-medium">{{ this.selectedCountry }}</span></p>
+              <a href="javascript:void(0);" (click)="toggleAddressForm()"
+                class="text-blue-600 hover:underline text-sm font-medium transition-colors duration-200 mt-1 inline-block">Change
+                address</a>
+
+              <div class="mt-4" *ngIf="showAddressForm">
+                <div class="space-y-2">
+                  <select id="country"
+                    class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                    <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+                  </select>
+                  <button
+                    class="w-full bg-gray-800 text-white py-2 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-200"
+                    (click)="onUpdateCountry()">Update</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between text-xl font-bold text-gray-800 pt-2">
+            <span>Total:</span>
+            <span>₹{{ cart.length === 0 ? '0.00' : (this.total + 300).toFixed(2) }}</span>
+          </div>
+
+          <div class="mt-4">
+            <a href="javascript:void(0);" (click)="toggleCouponForm()"
+              class="text-blue-600 hover:underline text-sm font-medium transition-colors duration-200 inline-block">Have
+              a coupon?</a>
+            <div class="mt-4" *ngIf="showCouponForm">
+              <div class="flex gap-2">
+                <input type="text"
+                  class="flex-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  placeholder="Coupon code">
+                <button
+                  class="bg-gray-800 text-white px-4 rounded-md font-semibold hover:bg-gray-700 transition-colors duration-200">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/checkout"
+          class="w-full block text-center mt-6 py-3 bg-gray-600 text-white rounded-md font-bold text-lg hover:bg-gray-700 transition-colors duration-200"
+          [ngClass]="{'opacity-50 cursor-not-allowed': cart.length === 0}">
+          Proceed to checkout
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>

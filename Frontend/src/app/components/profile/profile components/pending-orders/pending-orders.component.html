@@ -1,0 +1,57 @@
+<div>
+  <div *ngIf="pendingOrders.length > 0; else noOrders">
+    <div class="space-y-4">
+      @for (o of pendingOrders; track o._id ){
+      <div
+        class="bg-white/60 backdrop-blur-sm border border-slate-200 rounded-xl shadow-sm p-4 transition-all duration-300 hover:shadow-lg hover:border-slate-300">
+
+        <!-- Order Header -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-x-3">
+            <span class="flex h-3 w-3 relative -mt-1">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+            </span>
+            <p class="text-sm font-semibold text-slate-900">Order Pending</p>
+          </div>
+          <p class="text-xs font-medium text-slate-500">
+            ID: <span class="font-mono tracking-wider">{{o._id}}</span>
+          </p>
+        </div>
+
+        <hr class="my-3 border-slate-200">
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end gap-x-3">
+          <!-- Cancel Order -->
+          <button (click)="deleteOrder(o._id)"
+            class="text-sm font-semibold text-red-600 hover:text-white px-3 py-1 rounded-md hover:bg-red-500 transition-colors">
+            Cancel Order
+          </button>
+
+          <!-- View Details -->
+           <mat-dialog-actions>
+              <button (click)="openDialog(o._id)"
+                class="!bg-gray-600 !text-white hover:!bg-gray-800 transition px-4 py-2 rounded-md" mat-raised-button>
+                View details
+              </button>
+            </mat-dialog-actions>
+
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- No Orders -->
+  <ng-template #noOrders>
+    <div class="text-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50 py-12 px-4">
+      <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h3 class="mt-2 text-sm font-semibold text-slate-800">No pending orders</h3>
+      <p class="mt-1 text-sm text-slate-500">You're all caught up! New orders will appear here.</p>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,55 @@
+<div class="p-6 sm:p-8 max-w-3xl mx-auto font-sans">
+
+  <header class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 mb-6 border-b border-slate-200">
+    <div>
+      <h1 class="text-3xl font-bold text-slate-800">Order Details</h1>
+      <p class="mt-1 text-sm text-slate-500">
+        Order Date: <span class="font-medium text-slate-600">{{ dialogData.order.date }}</span>
+      </p>
+    </div>
+    <div class="text-xs font-bold uppercase px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 self-start sm:self-center">
+      Status: {{ dialogData.order.status }}
+    </div>
+  </header>
+
+  <div>
+      <h2 class="text-lg font-semibold text-slate-700 mb-2">Items Ordered</h2>
+      <div *ngIf="products.length > 0; else noProducts">
+        <div class="flow-root">
+            <ul role="list" class="divide-y divide-slate-200">
+                <li *ngFor="let product of products" class="flex items-center gap-4 py-4">
+                    <a href="product/{{product._id}}" class="flex-shrink-0">
+                        <img class="w-16 h-16 rounded-md object-cover border border-slate-200" [src]="product.image" alt="{{ product.title }}">
+                    </a>
+                    <div class="flex-1">
+                        <a href="product/{{product._id}}" class="text-sm font-semibold text-slate-800 hover:text-sky-600 transition-colors">
+                          {{product.title}}
+                        </a>
+                        <p class="mt-1 text-sm text-slate-500">ID: {{product._id}}</p>
+                    </div>
+                    <div class="text-sm font-medium text-slate-900 ml-4">
+                      ₹{{product.price}}
+                    </div>
+                </li>
+            </ul>
+        </div>
+      </div>
+      <ng-template #noProducts>
+        <p class="text-slate-500 py-4">There were no products found for this order.</p>
+      </ng-template>
+
+      <div class="mt-6 border-t border-slate-200 pt-6">
+        <div class="w-full max-w-sm ml-auto space-y-3 text-sm">
+            
+            <div class="flex justify-between items-center text-slate-600">
+                <span>Shipping</span>
+                <span class="font-medium text-gray-600">300</span>
+            </div>
+            <div class="flex justify-between items-center font-bold text-slate-900 text-base border-t border-slate-200 pt-3 mt-3">
+                <span>Total</span>
+                <span>₹{{ dialogData.order.totalPrice }}</span>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>

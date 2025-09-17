@@ -1,0 +1,122 @@
+<div class="bg-gray-50 min-h-screen flex">
+  <nav class="w-64 bg-gray-800 p-4">
+    <div class="text-center py-4">
+      <h1 class="text-2xl font-bold text-white">Admin Dashboard</h1>
+    </div>
+
+    <ul class="mt-8">
+      <li class="mb-4">
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-200"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin']">
+          <h1> Orders</h1>
+        </a>
+      </li>
+      <li class="mb-4">
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-200"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin/product']">
+          <h1>Products</h1>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-200"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin/users']">
+          <h1> Users</h1>
+        </a>
+      </li>
+    </ul>
+
+
+
+    <div class="p-6">
+      <form action="post">
+        <button
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ease-in-out"
+          (click)="logout()">
+          Logout
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="flex-1">
+    <div class="text-center py-6">
+      <h1 class="text-4xl font-bold text-gray-800">Admin Dashboard</h1>
+    </div>
+
+    <main class="container mx-auto p-4 md:p-6">
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6">
+          <!-- Header -->
+          <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4 sm:mb-0">
+              Products List
+            </h3>
+            <button
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+              (click)="createProduct()"
+            >
+              Create Product
+            </button>
+          </div>
+
+          <!-- Products Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-4 text-gray-600 font-bold uppercase tracking-wider text-sm">Image</th>
+                  <th class="p-4 text-gray-600 font-bold uppercase tracking-wider text-sm">Name</th>
+                  <th class="p-4 text-gray-600 font-bold uppercase tracking-wider text-sm">Price</th>
+                  <th class="p-4 text-gray-600 font-bold uppercase tracking-wider text-sm">Description</th>
+                  <th class="p-4 text-gray-600 font-bold uppercase tracking-wider text-sm text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let product of products"
+                  class="border-b border-gray-200 hover:bg-gray-50"
+                >
+                  <td class="p-4">
+                    <img
+                      [src]="product.image"
+                      [alt]="product.title"
+                      width="50"
+                      height="50"
+                      class="rounded-full object-cover"
+                    />
+                  </td>
+                  <td class="p-4 text-gray-800 font-medium">{{ product.title }}</td>
+                  <td class="p-4 text-gray-600">{{ product.price | currency }}</td>
+                  <td class="p-4 text-gray-600 max-w-xs line-clamp-2">{{ product.details }}</td>
+                  <td class="p-4">
+                    <div class="flex justify-center items-center space-x-2">
+                      <button
+                        class="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-3 rounded-md text-sm"
+                        (click)="viewProduct(product._id)"
+                      >
+                        View
+                      </button>
+                      <button
+                        class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-1 px-3 rounded-md text-sm"
+                        (click)="editProduct(product._id)"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded-md text-sm"
+                        (click)="deleteProduct(product._id)"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

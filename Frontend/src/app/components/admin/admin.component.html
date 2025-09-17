@@ -1,0 +1,70 @@
+<div class="flex min-h-screen ">
+  <nav class="w-64 bg-gray-800 p-4">
+    <div class="text-center py-4">
+      <h1 class="text-2xl font-bold text-white">Admin Dashboard</h1>
+    </div>
+
+    <ul class="mt-8">
+      <li class="mb-4">
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-300"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin']">
+          <h1> Orders</h1>
+        </a>
+      </li>
+      <li class="mb-4">
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-200"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin/product']">
+          <h1>Products</h1>
+        </a>
+      </li>
+      <li>
+        <a class="nav-link text-white hover:bg-gray-700 hover:text-white block py-2.5 px-4 rounded-md transition duration-200"
+          [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" [routerLink]="['/admin/users']">
+          <h1> Users</h1>
+        </a>
+      </li>
+    </ul>
+     <div class="p-6">
+      <form action="post">
+        <button
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ease-in-out"
+          (click)="logout()">
+          Logout
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="flex-1 bg-gray-50">
+    <main class="p-5 md:p-8">
+      <div>
+        <app-top-cards></app-top-cards>
+      </div>
+
+      <div class="flex flex-wrap -mx-4 mt-8">
+        <div class="w-full lg:w-7/12 px-4 mb-6 lg:mb-0">
+          <app-sales-summary></app-sales-summary>
+        </div>
+        <div class="w-full lg:w-5/12 px-4">
+          <app-feeds></app-feeds>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <div class="w-full">
+          <app-orders></app-orders>
+        </div>
+      </div>
+    </main>
+
+    <div class="w-full flex justify-center pb-8">
+      <form action="post">
+        <button
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ease-in-out"
+          (click)="logout()">
+          Logout
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

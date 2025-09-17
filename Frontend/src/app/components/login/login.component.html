@@ -1,0 +1,73 @@
+<div class="min-h-screen grid grid-cols-1 md:grid-cols-2">
+
+  <div class="hidden md:flex flex-col items-center justify-center bg-gray-900 p-12">
+    <div class="text-center text-white mb-8">
+      <h1 class="text-4xl font-bold">Welcome Back</h1>
+      <p class="text-gray-300 mt-2">Sign in to access your world of furniture.</p>
+    </div>
+    
+    <div class="w-full max-w-md">
+      <div class="aspect-square">
+        <iframe
+          class="w-full h-full"
+          src="https://lottie.host/embed/146391e0-3452-4ea5-ba7e-e5e320f413eb/soAYlh0sHd.lottie"
+          frameborder="0">
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center justify-center bg-gray-50 p-8">
+    <div class="w-full max-w-md">
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <h2 class="text-3xl font-bold text-gray-800 text-left mb-2">Login</h2>
+        <p class="text-gray-600 mb-8">Enter your credentials to continue.</p>
+
+        <div class="mb-5">
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email Address</label>
+          <input 
+            id="email"
+            type="email" 
+            formControlName="email"
+            placeholder="you@example.com"
+            class="block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
+          >
+        </div>
+
+        <div class="mb-6">
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Password</label>
+          <input 
+            id="password"
+            type="password" 
+            formControlName="password" 
+            placeholder="••••••••"
+            class="block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm
+                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
+          >
+        </div>
+
+        <div>
+          <button 
+            type="submit" 
+            class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg
+                   hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                   transition-all duration-300 transform hover:scale-105"
+          >
+            Sign In
+          </button>
+        </div>
+
+        <div class="text-center mt-6">
+          <p class="text-sm text-gray-600">
+            Don't have an account yet? 
+            <a [routerLink]="['/register']" class="font-medium text-blue-600 hover:underline">
+              Register here
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

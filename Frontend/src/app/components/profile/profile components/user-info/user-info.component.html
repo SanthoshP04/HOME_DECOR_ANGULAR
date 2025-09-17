@@ -1,0 +1,42 @@
+<div class="flex flex-col">
+
+  <div class="flex justify-between items-center pb-4 border-b border-gray-200">
+    <h1 class="text-xl font-bold text-gray-900">Personal Info</h1>
+    <img class="w-11 h-11" src="../../../../../assets/resume.png" alt="Info Icon">
+  </div>
+
+  <div class="py-4 space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 items-center">
+      <h4 class="text-base font-semibold text-gray-700 col-span-1">User Name</h4>
+      <div class="text-base text-gray-900 col-span-1 md:col-span-3">
+        @if(userInfo){
+          {{userInfo.username}}
+        } @else {
+          <span class="text-gray-400">Not available</span>
+        }
+      </div>
+    </div>
+
+    <hr class="border-gray-200">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 items-center">
+      <h4 class="text-base font-semibold text-gray-700 col-span-1">Email</h4>
+      <div class="text-base text-gray-900 col-span-1 md:col-span-3">
+        @if(userInfo){
+          {{userInfo.email}}
+        } @else {
+          <span class="text-gray-400">Not available</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="pt-4 mt-2 flex justify-end">
+    <mat-dialog-actions>
+      <button mat-raisen-button (click)="openDialog()"
+              class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 ease-in-out">
+        Edit
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>

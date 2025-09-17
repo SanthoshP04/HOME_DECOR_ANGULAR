@@ -1,0 +1,26 @@
+<div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg p-6 max-w-sm mx-auto transform transition duration-300 hover:scale-105 hover:shadow-xl">
+  <div class="mb-4">
+    <h4 class="text-2xl font-semibold text-gray-800">Feeds</h4>
+    <h5 class="text-lg font-normal text-gray-500 mt-1">
+      Insights about your orders
+    </h5>
+  </div>
+  <div class="mt-4">
+    <ul class="list-none m-0">
+      <li
+        class="flex items-center mb-4 transition duration-200 hover:bg-gray-100 hover:bg-opacity-50 p-2 rounded-lg"
+        *ngFor="let feed of feeds"
+      >
+        <div
+          class="rounded-full text-white flex items-center justify-center text-xl p-2"
+          [ngClass]="feed.class"
+          style="width: 40px; height: 40px"
+        >
+          <i [ngClass]="feed.icon"></i>
+        </div>
+        <h5 class="mb-0 font-normal ml-3 text-base">{{ feed.task }}</h5>
+        <span class="text-gray-500 ml-auto text-base"></span>
+      </li>
+    </ul>
+  </div>
+</div>

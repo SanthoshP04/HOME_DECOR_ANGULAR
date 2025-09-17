@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Payment Method</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .card-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+        }
+
+        .dropdown.open .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #374151;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-radius: 6px;
+            margin: 4px;
+            cursor: pointer;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f3f4f6;
+        }
+
+        .card-logo {
+            width: 40px;
+            height: 26px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        .visa-logo {
+            background-color: #1a1f71;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .visa-logo::after {
+            content: 'VISA';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .mastercard-logo {
+            background: linear-gradient(90deg, #eb001b 0%, #eb001b 50%, #ff5f00 50%, #ff5f00 100%);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .mastercard-logo::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 15px;
+            width: 20px;
+            height: 20px;
+            background: #ff5f00;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .amex-logo {
+            background-color: #006fcf;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .amex-logo::after {
+            content: 'AMEX';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .input-error {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .payment-card:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+        <!-- Left Panel with Animation -->
+        <div class="hidden lg:flex flex-col items-center justify-center bg-gray-800 p-12">
+            <div class="text-center text-white mb-8">
+                <h1 class="text-4xl font-bold mb-4">Secure Payment</h1>
+                <p class="text-gray-300 text-lg">Complete your purchase safely and securely</p>
+            </div>
+
+            <div class="w-full max-w-md">
+                <div class="aspect-square rounded-lg overflow-hidden bg-gray-800 p-8">
+                    <div
+                        class="w-full h-full rounded-lg bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <iframe
+                                src="https://lottie.host/embed/25753ffe-ad7d-49d5-936b-859018341857/W2av4nQBut.lottie"
+                                style="width: 250px; height: 250px; margin: 0 auto; border: none;"></iframe>
+                            <p class="text-lg font-semibold mt-4">Secure Transaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <div class="flex items-center justify-center space-x-4 text-gray-400">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        256-bit SSL
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Secure
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel with Payment Form -->
+        <div class="flex flex-col items-center justify-center bg-gray-50 p-4 lg:p-8">
+            <div class="w-full max-w-md">
+                <div class="bg-white rounded-2xl shadow-xl p-6 lg:p-8 fade-in-up">
+                    <h2 class="text-2xl lg:text-3xl font-bold text-gray-800 text-left mb-2">Card Payment</h2>
+                    <p class="text-gray-600 mb-6 lg:mb-8">Enter your card details to complete the payment.</p>
+
+                    <!-- Payment Form -->
+                    <form id="payment-form" class="space-y-6" novalidate>
+                        <!-- Card Type Selection -->
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Card Type</label>
+                            <div class="dropdown">
+                                <button type="button" id="card-type-btn"
+                                    class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all flex items-center justify-between"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="flex items-center">
+                                        <div class="card-logo visa-logo mr-3"></div>
+                                        <span id="selected-card-text">Visa</span>
+                                    </span>
+                                    <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-content" role="menu">
+                                    <a href="#" role="menuitem" onclick="selectCard('visa', 'Visa'); return false;">
+                                        <div class="flex items-center">
+                                            <div class="card-logo visa-logo mr-3"></div>
+                                            Visa
+                                        </div>
+                                    </a>
+                                    <a href="#" role="menuitem"
+                                        onclick="selectCard('mastercard', 'Mastercard'); return false;">
+                                        <div class="flex items-center">
+                                            <div class="card-logo mastercard-logo mr-3"></div>
+                                            Mastercard
+                                        </div>
+                                    </a>
+                                    <a href="#" role="menuitem"
+                                        onclick="selectCard('amex', 'American Express'); return false;">
+                                        <div class="flex items-center">
+                                            <div class="card-logo amex-logo mr-3"></div>
+                                            American Express
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Number -->
+                        <div>
+                            <label for="card-number" class="block mb-2 text-sm font-medium text-gray-700">Card Number
+                                *</label>
+                            <input id="card-number" type="text" placeholder="1234 5678 9012 3456" maxlength="19"
+                                required autocomplete="cc-number"
+                                class="card-input block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-mono">
+                            <div class="error-message" id="card-number-error"></div>
+                        </div>
+
+                        <!-- Card Holder -->
+                        <div>
+                            <label for="card-holder" class="block mb-2 text-sm font-medium text-gray-700">Card Holder
+                                Name *</label>
+                            <input id="card-holder" type="text" placeholder="John Doe" required autocomplete="cc-name"
+                                class="card-input block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                            <div class="error-message" id="card-holder-error"></div>
+                        </div>
+
+                        <!-- Expiry and CVC -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="card-expiry" class="block mb-2 text-sm font-medium text-gray-700">Expiry
+                                    Date *</label>
+                                <input id="card-expiry" type="text" placeholder="MM/YY" maxlength="5" required
+                                    autocomplete="cc-exp"
+                                    class="card-input block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-mono">
+                                <div class="error-message" id="card-expiry-error"></div>
+                            </div>
+                            <div>
+                                <label for="card-cvc" class="block mb-2 text-sm font-medium text-gray-700">CVC *</label>
+                                <input id="card-cvc" type="text" placeholder="123" maxlength="4" required
+                                    autocomplete="cc-csc"
+                                    class="card-input block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all font-mono">
+                                <div class="error-message" id="card-cvc-error"></div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button - Changed class from default to pay-btn to match Angular component -->
+                        <button type="submit" class="pay-btn w-full bg-blue-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:scale-105 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                            Complete Payment
+                        </button>
+                    </form>
+
+                    <!-- Security Notice -->
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-500">
+                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Your payment information is encrypted and secure
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form validation functions
+            function validateCardNumber(number) {
+                const cleaned = number.replace(/\s/g, '');
+                return cleaned.length >= 13 && cleaned.length <= 19 && /^\d+$/.test(cleaned);
+            }
+
+            function validateCardHolder(name) {
+                return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name.trim());
+            }
+
+            function validateExpiry(expiry) {
+                const match = expiry.match(/^(\d{2})\/(\d{2})$/);
+                if (!match) return false;
+
+                const month = parseInt(match[1]);
+                const year = parseInt('20' + match[2]);
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth() + 1;
+
+                if (month < 1 || month > 12) return false;
+                if (year < currentYear || (year === currentYear && month < currentMonth)) return false;
+
+                return true;
+            }
+
+            function validateCVC(cvc, cardType) {
+                const length = cardType === 'amex' ? 4 : 3;
+                return cvc.length === length && /^\d+$/.test(cvc);
+            }
+
+            function showError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const errorDiv = document.getElementById(fieldId + '-error');
+                if (field && errorDiv) {
+                    field.classList.add('input-error');
+                    errorDiv.textContent = message;
+                    errorDiv.classList.add('show');
+                }
+            }
+
+            function clearError(fieldId) {
+                const field = document.getElementById(fieldId);
+                const errorDiv = document.getElementById(fieldId + '-error');
+                if (field && errorDiv) {
+                    field.classList.remove('input-error');
+                    errorDiv.classList.remove('show');
+                }
+            }
+
+            // Card type selection
+            window.selectCard = function(type, name) {
+                const dropdown = document.querySelector('.dropdown');
+                const btn = document.getElementById('card-type-btn');
+                const text = document.getElementById('selected-card-text');
+                const logo = btn.querySelector('.card-logo');
+                const arrow = btn.querySelector('svg');
+
+                if (dropdown && btn && text && logo && arrow) {
+                    // Update button
+                    logo.className = `card-logo ${type}-logo mr-3`;
+                    text.textContent = name;
+
+                    // Close dropdown
+                    dropdown.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    arrow.style.transform = 'rotate(0deg)';
+
+                    // Store selected card type
+                    btn.dataset.cardType = type;
+                }
+            }
+
+            // Dropdown functionality
+            const cardTypeBtn = document.getElementById('card-type-btn');
+            if (cardTypeBtn) {
+                cardTypeBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const dropdown = document.querySelector('.dropdown');
+                    const arrow = this.querySelector('svg');
+                    const isOpen = dropdown.classList.contains('open');
+
+                    if (isOpen) {
+                        dropdown.classList.remove('open');
+                        this.setAttribute('aria-expanded', 'false');
+                        arrow.style.transform = 'rotate(0deg)';
+                    } else {
+                        dropdown.classList.add('open');
+                        this.setAttribute('aria-expanded', 'true');
+                        arrow.style.transform = 'rotate(180deg)';
+                    }
+                });
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                const dropdown = document.querySelector('.dropdown');
+                const btn = document.getElementById('card-type-btn');
+
+                if (dropdown && btn && !dropdown.contains(e.target)) {
+                    const arrow = btn.querySelector('svg');
+                    dropdown.classList.remove('open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Format card number input
+            const cardNumberInput = document.getElementById('card-number');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function (e) {
+                    clearError('card-number');
+                    let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+                    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                    e.target.value = formattedValue;
+                });
+            }
+
+            // Format expiry date input
+            const cardExpiryInput = document.getElementById('card-expiry');
+            if (cardExpiryInput) {
+                cardExpiryInput.addEventListener('input', function (e) {
+                    clearError('card-expiry');
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // Format CVC input
+            const cardCvcInput = document.getElementById('card-cvc');
+            if (cardCvcInput) {
+                cardCvcInput.addEventListener('input', function (e) {
+                    clearError('card-cvc');
+                    e.target.value = e.target.value.replace(/[^0-9]/gi, '');
+                });
+            }
+
+            // Card holder name input
+            const cardHolderInput = document.getElementById('card-holder');
+            if (cardHolderInput) {
+                cardHolderInput.addEventListener('input', function (e) {
+                    clearError('card-holder');
+                });
+            }
+
+            // Form submission
+            const paymentForm = document.getElementById('payment-form');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Clear all previous errors
+                    ['card-number', 'card-holder', 'card-expiry', 'card-cvc'].forEach(clearError);
+
+                    // Get form values
+                    const cardNumber = cardNumberInput?.value || '';
+                    const cardHolder = cardHolderInput?.value || '';
+                    const cardExpiry = cardExpiryInput?.value || '';
+                    const cardCvc = cardCvcInput?.value || '';
+                    const cardType = cardTypeBtn?.dataset.cardType || 'visa';
+
+                    let isValid = true;
+
+                    // Validate all fields
+                    if (!validateCardNumber(cardNumber)) {
+                        showError('card-number', 'Please enter a valid card number');
+                        isValid = false;
+                    }
+
+                    if (!validateCardHolder(cardHolder)) {
+                        showError('card-holder', 'Please enter a valid card holder name');
+                        isValid = false;
+                    }
+
+                    if (!validateExpiry(cardExpiry)) {
+                        showError('card-expiry', 'Please enter a valid expiry date (MM/YY)');
+                        isValid = false;
+                    }
+
+                    if (!validateCVC(cardCvc, cardType)) {
+                        const expectedLength = cardType === 'amex' ? 4 : 3;
+                        showError('card-cvc', `Please enter a valid ${expectedLength}-digit CVC`);
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        return;
+                    }
+
+                    // Process payment if valid
+                    const button = document.querySelector('.pay-btn');
+                    if (button) {
+                        const originalText = button.innerHTML;
+                        button.innerHTML = `
+                            <svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing...
+                        `;
+                        button.disabled = true;
+
+                        // Simulate payment processing
+                        setTimeout(() => {
+                            alert('Payment processed successfully!');
+                            button.innerHTML = originalText;
+                            button.disabled = false;
+
+                            // Reset form
+                            paymentForm.reset();
+                        }, 2000);
+                    }
+                });
+            }
+
+            // Initialize card type
+            if (cardTypeBtn) {
+                cardTypeBtn.dataset.cardType = 'visa';
+            }
+        });
+    </script>
+</body>
+
+</html>

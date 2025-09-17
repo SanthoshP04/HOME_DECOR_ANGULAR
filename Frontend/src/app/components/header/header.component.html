@@ -1,0 +1,98 @@
+<nav class="bg-gray-800 text-white px-4 py-3 shadow-lg">
+  <div class="flex items-center justify-between">
+    <a class="text-white no-underline hover:text-gray-300 transition-all duration-300 ease-in-out hover:-translate-y-0.5" [routerLink]="['/home']">
+      <h1 class="text-2xl font-bold">Home</h1>
+    </a>
+
+    <button class="lg:hidden text-white hover:text-gray-300" type="button" [matMenuTriggerFor]="menu">
+      <mat-icon class="text-2xl">menu</mat-icon>
+    </button>
+
+    <div class="hidden lg:flex items-center justify-between flex-1 ml-8">
+      <ul class="flex items-center space-x-6">
+        <li>
+          <a class="text-white no-underline hover:text-gray-300 transition-all duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-700 hover:-translate-y-1" 
+           [routerLink]="['/products']">Products</a>
+        </li>
+      
+      </ul>
+
+      <div class="flex items-center space-x-4">
+        <a class="text-white no-underline hover:text-gray-300 transition-all duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-700 hover:-translate-y-1" 
+           [routerLink]="['/about']">About Us</a>
+        
+        <a class="bg-blue-600 hover:bg-blue-700 text-white no-underline px-4 py-2 rounded-md transition-all duration-300 ease-in-out font-medium hover:scale-105" 
+           [routerLink]="['/login']">Login</a>
+        
+        <a class="text-white no-underline hover:text-gray-300 transition-all duration-300 ease-in-out px-3 py-2 rounded-md hover:bg-gray-700 hover:-translate-y-1" 
+           [routerLink]="['/profile']">My Account</a>
+        
+        <a class="relative bg-gray-700 hover:bg-gray-600 text-white no-underline p-2 rounded-md transition-all duration-300 ease-in-out hover:scale-110" 
+           [routerLink]="['/cart']" [matBadge]="data" matBadgePosition="after" matBadgeColor="warn">
+          <mat-icon>shopping_cart</mat-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <mat-menu #menu="matMenu" class="lg:hidden">
+    <div class="bg-gray-800 text-white min-w-64">
+      <div class="px-4 py-2">
+        <ul class="space-y-2">
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']">All Products</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Chair' }">Chair</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Sofa' }">Sofa</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Bed' }">Bed</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Wardrobe' }">Wardrobe</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Dressing Tables' }">Dressing Tables</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Dining Tables' }">Dining Tables</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'Study Tables' }">Study Tables</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/products']" [queryParams]="{ category: 'TV and Media Units' }">TV & Media Units</a>
+          </li>
+          
+          <li class="border-t border-gray-600 my-2"></li>
+          
+          <li>
+            <a class="block bg-blue-600 hover:bg-blue-700 text-white no-underline px-3 py-2 rounded-md transition-colors duration-200 font-medium text-center" 
+               [routerLink]="['/login']">Login</a>
+          </li>
+          
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/about']">About Us</a>
+          </li>
+          <li>
+            <a class="block text-white no-underline hover:text-gray-300 transition-colors duration-200 px-3 py-2 rounded-md hover:bg-gray-700" 
+               [routerLink]="['/profile']">My Account</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </mat-menu>
+</nav>
